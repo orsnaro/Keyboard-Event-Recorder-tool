@@ -71,6 +71,11 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
 	# Get a handle to the application's main window
 	hwnd = win32gui.FindWindow(None, window_name)
  
+	if hwnd == False : #retry
+		print("\n\n ##Error Finding Your Window retry please ...##\n\n")
+		main_keyrec(state = False)
+		
+ 
 	tid , pid = win32process.GetWindowThreadProcessId(hwnd)
 	crnt_thread_id = win32api.GetCurrentThreadId()
 	target_proc_id , _ = win32process.GetWindowThreadProcessId(hwnd)
@@ -143,19 +148,20 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
 								win32process.AttachThreadInput(crnt_thread_id , target_proc_id , False)
 								sys.exit(0)  # success
 
-def main_keyrec() -> bool :
-	print("\t\t\t\t~~~~~~~~~ WELCOME TO (KeyRec - Asda) v2.0B by ORS ~~~~~~~~~\n")
-	print(
-	"""
-			Coder : Omar
-			Version : v2.0B
-			Code Type : key recorder app for specific app window
-			Title : KeyRec-Asda
-			Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
-			EXE using : pyinstaller module
-   
-			~WORKS IF Your GAME OR APP is out of focus even if minimized!! <3~
-	""")
+def main_keyrec(state : bool = True) -> bool :
+	if state == True :
+		print("\t\t\t\t~~~~~~~~~ WELCOME TO (KeyRec - Asda) v2.0B by ORS ~~~~~~~~~\n")
+		print(
+		"""
+				Coder : Omar
+				Version : v2.0B
+				Code Type : key recorder app for specific app window
+				Title : KeyRec-Asda
+				Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
+				EXE using : pyinstaller module
+		
+				~WORKS IF Your GAME OR APP is out of focus even if minimized!! <3~
+		""")
 
 	choice =  int(input("\n\n\n (1) Use on custom window \n (2) Use on Asda Story window \r\n choice: "))
 	events = record(start_key='f10')
