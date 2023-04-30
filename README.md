@@ -2,6 +2,9 @@
 automation tool that records any given keyboard events 
 and plays them to any specific window / game
 
+![tool icon image](./KeyRec.ico)
+
+
 > #### **✨Features :**
 * -default is asda story game window my childhood game 💙- 
 
