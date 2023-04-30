@@ -2,6 +2,9 @@
 automation tool that records any given keyboard events 
 and plays them to any specific window / game
 
+![tool icon image](./KeyRec.ico)
+
+
 > #### **✨Features :**
 * -default is asda story game window my childhood game 💙- 
 
@@ -22,4 +25,4 @@ and plays them to any specific window / game
 
 -----
 
-<sub> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;📍 I found that most known key-recording tools is  not working  well or not working at all so I made my self one in ~3hours💙 , exe for both versions in : **[Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)**  📍 </sub>
+<sub>📍 I found that most known key-recording tools is  not working  well or not working at all so I made my self one in ~3hours💙 , exe for both versions in : **[Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)**  📍 </sub>
