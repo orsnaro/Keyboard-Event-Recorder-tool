@@ -1,6 +1,8 @@
 # Keyboard-Event-Recorder-tool
-automation tool that records any given keyboard events 
-and plays them to any specific window / game
+  * automation tool that records any given keyboard events 
+  and plays them to any specific window / game 
+  
+  * _( tested using ***OS:*** win10 | ***Keyboard:*** Redragon Daksa : K576R-1 blue sw. )_
 
 ![tool icon image](./KeyRec.ico)
 
@@ -24,12 +26,15 @@ and plays them to any specific window / game
 
 * random timing between key strokes 
 
+* works perfectly with asda story game which was main goal of tool 
+
 -----
 
 > #### **🐞Known Bugs :**
 
 * Some Window Titles in tskmgr are inaccurate  (proccess might not have a window or other issue)
   - somtimes we hook the Window but it ignores `post message `
+* At recording somtimes record get flushed to console after done recording causing   UB (though it's not that frequent at all any more like prev versions)
 
 
 ----
