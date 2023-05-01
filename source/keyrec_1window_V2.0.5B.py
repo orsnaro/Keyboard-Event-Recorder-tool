@@ -1,14 +1,13 @@
 
 """
 								  Coder : Omar
-								  Version : v2.0.1B
+								  Version : v2.0.5B
 								  version Date :  29 / 4 / 2023
 								  Code Type : key recorder app for specific app window
 								  Title : KeyRec-Asda
 								  Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
 								  EXE using : pyinstaller module
 """
-#TODO : easy: Restart new record
 #TODO : easy: user choose timing (easy if timing range is const between all strokes) (each event has time since epoch)
 #TODO : easy:  export and import .Key_Rec files (could use pandas or save to csv)
 #TODO : depends: OOP it 
@@ -27,6 +26,7 @@ import time
 import sys
 import os
 import msvcrt
+
 def get_keys_map_dict() -> dict:
 	# Create a dictionary that maps key names to virtual key codes and scan codes
 	# scan_codes_dict = codes.SCAN_CODE
@@ -176,14 +176,21 @@ def main_keyrec(state : bool = True) -> bool :
 
 		# ok = input("\n\npress 'Enter' to continue or '1' to re-record...") #dummy to take events all chars buffer and avoid print any control char
 		# True if ok == '' else  main_keyrec() 
-
-		choice =  int(input("\n\n\n (1) Use on custom window \n (2) Use on Asda Story window \r\n choice: "))
+		choice = None
+		while True :
+			choice =  input("\n\n (1) Use on custom window \n (2) Use on Asda Story window \r\n choice: ")
+			if choice.isnumeric() :
+				break;
+			else :
+				print ("\n\n#INVALID INPUT! RETRY#")
+				
+		choice = int(choice)
 		if choice == 1 :
 			window_name = str(input("\n\n Enter Your Window name: \n")).strip()
 			replay_in_window(events, key_mapping=key_mapping, replay_key='f12',window_name= window_name)
 		else :
 			replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
-
+    
 		print(f"\n\n\n-> '1' New Record \n-> '0' Exit ")
 		state = bool(input())
 		os.system("cls")
