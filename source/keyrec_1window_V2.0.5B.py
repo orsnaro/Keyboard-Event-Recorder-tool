@@ -185,7 +185,7 @@ def main_keyrec(state : bool = True) -> bool :
 			replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
 
 		print(f"\n\n\n-> '1' New Record \n-> '0' Exit ")
-		state = input()
+		state = bool(input())
 		os.system("cls")
 
 	sys.exit(0)
