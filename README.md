@@ -33,4 +33,4 @@ and plays them to any specific window / game
 
 
 ----
-  <sub> &emsp;&emsp;&emsp;📍 I found that most _known_ key-recording tools is  might be not working at all so I made my self one in ~3hours💙 , exe for both versions in : [Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)  📍 &emsp; </sub> 
+  <sub> &emsp;&emsp;📍 I found that most _known_ key-recording tools is  might be not working at all so I made my self one in ~3hours💙 , exe for both versions in : [Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)  📍 &emsp; </sub> 
