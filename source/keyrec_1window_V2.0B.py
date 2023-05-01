@@ -1,7 +1,7 @@
 
 """
 								  Coder : Omar
-								  Version : v2.0B
+								  Version : v2.0.1B
 								  version Date :  29 / 4 / 2023
 								  Code Type : key recorder app for specific app window
 								  Title : KeyRec-Asda
@@ -9,11 +9,12 @@
 								  EXE using : pyinstaller module
 """
 #TODO : easy: Restart new record
-#TODO : easy: user choose timing (easy if timin33333333g range is const between all strokes)
+#TODO : easy: user choose timing (easy if timing range is const between all strokes) (each event has time since epoch)
 #TODO : easy:  export and import .Key_Rec files (could use pandas or save to csv)
 #TODO : depends: OOP it 
 #TODO : mid: GUI it
-#TODO : mid: mouse recording
+#TODO : mid-hard: mouse recording
+#TODO : fix Some windows titles could not be found easily 
 
 import scan_vk_codes_dicts as codes
 import win32api
@@ -25,8 +26,7 @@ import random
 import time
 import sys
 import os
-
-
+import msvcrt
 def get_keys_map_dict() -> dict:
 	# Create a dictionary that maps key names to virtual key codes and scan codes
 	# scan_codes_dict = codes.SCAN_CODE
@@ -52,14 +52,14 @@ def record(start_key='f5'):
 	while True:
 		if keyboard.is_pressed(start_key):
 			print("\nSTARTED RECORDING...")
-			time.sleep(1)
+   
 			events = keyboard.record(until=start_key)
-			print("END RECORDING...")
+			keyboard.unhook_all()
+			print("DONE! RECORDING...")
 			break
-	events_done = events[:-1]
- 
-	os.system("cls")
-	print(f"\n\n\nrecorded keys : \n {events_done}")
+	
+	events_done = events[1:-1]
+	print(f"\n\nFull Record = \n {events_done} " , flush=True)
 	return events_done
 
 
@@ -71,9 +71,9 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
 	# Get a handle to the application's main window
 	hwnd = win32gui.FindWindow(None, window_name)
  
-	if hwnd == False : #retry
-		print("\n\n ##Error Finding Your Window retry please ...##\n\n")
-		main_keyrec(state = False)
+	if hwnd == False  or window_name == '': #retry
+		print("\n\n ##Error Finding Your Window title retry please ...##\n\n")
+		return False #use it later
 		
  
 	tid , pid = win32process.GetWindowThreadProcessId(hwnd)
@@ -85,8 +85,7 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
  
 	# Get the dimensions of the application's main window
 	rect = win32gui.GetWindowRect(hwnd)
-	x, y, _, _ = rect
-	print(rect)
+	print(f"\n your '{window_name}' window shape: {rect}")
 
 	print(
 		f"\n\n\n-> '{replay_key}' to start replay. \n-> '{replay_key}' again pauses replay")
@@ -99,6 +98,8 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
 			while True:
 				#bring window you want to focus and show  it at top most
 				# win32gui.SetForegroundWindow(hwnd)
+				# events = events[:-1]
+    
 				for event in events:
 					# convert gotten physical key code( scan code ) to vk code and pass booth
 					scan_code = event.scan_code
@@ -128,9 +129,9 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
 						os.system("cls") 
 						print("\nPAUSED RE-PLAYING...")
 						print(
-							f"\n  -> '{replay_key}' again to UN-PAUSE")
+							f"\n  '{replay_key}' again to UN-PAUSE")
 						print(
-							f"  -> '{stop_key}'  to STOP & EXIT ")
+							f"  -> '{stop_key}'  stop & go to Main menu ")
 		
 						while True :
 							if keyboard.is_pressed(replay_key):
@@ -146,34 +147,50 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
 		
 								# Detach i/p crnt thread from i/p target_proc_thread 
 								win32process.AttachThreadInput(crnt_thread_id , target_proc_id , False)
-								sys.exit(0)  # success
+								return True  #success use it later
 
 def main_keyrec(state : bool = True) -> bool :
-	if state == True :
-		print("\t\t\t\t~~~~~~~~~ WELCOME TO (KeyRec - Asda) v2.0B by ORS ~~~~~~~~~\n")
-		print(
-		"""
-				Coder : Omar
-				Version : v2.0B
-				Code Type : key recorder app for specific app window
-				Title : KeyRec-Asda
-				Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
-				EXE using : pyinstaller module
-		
-				~WORKS IF Your GAME OR APP is out of focus even if minimized!! <3~
-		""")
-
-	choice =  int(input("\n\n\n (1) Use on custom window \n (2) Use on Asda Story window \r\n choice: "))
-	events = record(start_key='f10')
-	key_mapping = get_keys_map_dict()
- 
-	if choice == 1 :
-		window_name = str(input("Enter Your Window name: \n")).strip()
-		replay_in_window(events, key_mapping=key_mapping, replay_key='f12',window_name= window_name)
-	else :
-		replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
+   
+	print("\t    ~~~~~~~~~ WELCOME TO (KeyRec - Asda) v2.0.5B by ORS ~~~~~~~~~\n")
+	print(
+	"""
+			Coder : Omar
+			Version : v2.0B
+			Code Type : key recorder app for specific app window
+			Title : KeyRec-Asda
+			Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
+			EXE using : pyinstaller module
 	
-	return True #success
+	~WORKS IF Your GAME OR APP is out of focus even if minimized!! <3~
+	""")
+
+	while state == True : 
+
+		events = record(start_key='f10')
+		key_mapping = get_keys_map_dict()
+		print (f"num. of key strokes: {len(events)//2}" )
+
+		#this loop consumes all keyboard library buffer so no control char messes out our tool
+		for i in range( len(events)//2 + 2): #for some reason it exists before last two
+			msvcrt.getch()
+
+		# ok = input("\n\npress 'Enter' to continue or '1' to re-record...") #dummy to take events all chars buffer and avoid print any control char
+		# True if ok == '' else  main_keyrec() 
+
+		choice =  int(input("\n\n\n (1) Use on custom window \n (2) Use on Asda Story window \r\n choice: "))
+		if choice == 1 :
+			window_name = str(input("\n\n Enter Your Window name: \n")).strip()
+			replay_in_window(events, key_mapping=key_mapping, replay_key='f12',window_name= window_name)
+		else :
+			replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
+
+		print(f"\n\n\n-> '1' New Record \n-> '0' Exit ")
+		state = input()
+		os.system("cls")
+
+	sys.exit(0)
+
+
 
 
 if __name__ == '__main__':
