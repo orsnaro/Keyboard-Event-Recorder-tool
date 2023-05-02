@@ -14,6 +14,12 @@
 #TODO : mid: GUI it
 #TODO : mid-hard: mouse recording
 #TODO : fix Some windows titles could not be found easily 
+# TODO s:
+# * Select app by its PID in task maneger (very soon)
+# * Select App from Window Title list
+# * Select App By pointing to it using mouse hover on app
+# * choose your game/app from history of last 5 used apps/games in the tool
+# * use key combo e.g.(ctrl + shift)
 
 import scan_vk_codes_dicts as codes
 import win32api
@@ -154,7 +160,7 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
 						os.system("cls") 
 						print("\nPAUSED RE-PLAYING...")
 						print(
-							f"\n  '{replay_key}' again to UN-PAUSE")
+							f"\n  -> '{replay_key}' again to UN-PAUSE")
 						print(
 							f"  -> '{stop_key}'  stop & go to Main menu ")
 		
