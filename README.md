@@ -57,7 +57,8 @@ Automation tool that records any given keyboard events
 
 * Some Window Titles in tskmgr are inaccurate  (proccess might not have a window or other issue)
 	- somtimes we hook the Window but it ignores `post message `
-* At recording somtimes record get flushed to console after done recording causing   UB (though it's not that frequent at all any more like prev versions)
+* At recording somtimes record get flushed to console after done recording causing   UB (though it's not that frequent at all any more like prev versions)ttT
+* recording combined keys not working
 
 
 ----
