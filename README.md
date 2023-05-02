@@ -2,10 +2,17 @@
   * automation tool that records any given keyboard events 
   and plays them to any specific window / game 
   
-  * _( tested using ***OS:*** win10 | ***Keyboard:*** Redragon Daksa : K576R-1 blue sw. )_
+  ----
+  
+  > #### **📣About Version:**
+  
+   * tested using ***OS:*** win10 | ***Keyboard:*** Redragon Daksa : K576R-1 blue sw. )
+   * Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]	 |	EXE using : pyinstaller module
+	
 
 ![tool icon image](./KeyRec.ico)
 
+----
 
 > #### **✨Features :**
 
