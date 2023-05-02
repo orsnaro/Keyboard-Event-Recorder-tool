@@ -1,11 +1,23 @@
-# Keyboard-Event-Recorder-tool
-  * automation tool that records any given keyboard events 
+ # <center> Keyboard-Event-Recorder-tool 
+* ### _Brief:_
+Automation tool that records any given keyboard events 
   and plays them to any specific window / game 
+
+* ### _Where To Find my Game/App title name?_
+	* dont get the name from task maneger they are mostly in-accurate(Mostly a proccess name  not a Window name) instead  ***for now***   use this tool: Window spy in [`AutoHotkey`](https://www.autohotkey.com/)
+	to get accurate title name  by hovering on your app
   
-  * _( tested using ***OS:*** win10 | ***Keyboard:*** Redragon Daksa : K576R-1 blue sw. )_
+  ----
+  
+  > #### **📣About Version:**
+  
+   * tested using ***OS:*** win10 | ***Keyboard:*** Redragon Daksa : K576R-1 blue sw. )
+   * Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]	 |	EXE using : pyinstaller module
+	
 
 ![tool icon image](./KeyRec.ico)
 
+----
 
 > #### **✨Features :**
 
@@ -30,11 +42,23 @@
 
 -----
 
+> #### **✨UPCOMING FEATURES:**
+
+* Select app by Enter its PID in Task manager (very soon)
+* Select App from A Window Title list
+* Select App By pointing to it using mouse hover on App
+* Record mouse keys
+* Control timing between key strokes 
+* choose from History of 5 last used Games/App in tool
+* More User Friendly GUI 
+
+----
 > #### **🐞Known Bugs :**
 
 * Some Window Titles in tskmgr are inaccurate  (proccess might not have a window or other issue)
-  - somtimes we hook the Window but it ignores `post message `
-* At recording somtimes record get flushed to console after done recording causing   UB (though it's not that frequent at all any more like prev versions)
+	- somtimes we hook the Window but it ignores `post message `
+* At recording somtimes record get flushed to console after done recording causing   UB (though it's not that frequent at all any more like prev versions)ttT
+* recording combined keys not working
 
 
 ----
