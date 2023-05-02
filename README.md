@@ -1,5 +1,6 @@
  # <center> Keyboard-Event-Recorder-tool 
-* ### Brief: Automation tool that records any given keyboard events 
+* ### _Brief:_
+Automation tool that records any given keyboard events 
   and plays them to any specific window / game 
 
 * ### _Where To Find my Game/App title name?_
