@@ -99,8 +99,6 @@ def replay_in_window(events,  key_mapping: dict, replay_key: str = 'f6', stop_ke
 	enabled = "Enabled" if win32gui.IsWindowEnabled(hwnd) else "Disabled"
 	print (f" ({enabled})")
 	
-	#try enable window it if disabled
-	win32gui.EnableWindow(hwnd , True if enabled == "Enabled" else False ) 
 	
 
 	print(
