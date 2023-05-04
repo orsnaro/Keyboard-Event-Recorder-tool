@@ -51,7 +51,7 @@ Automation tool that records any given keyboard events
 * Control timing between key strokes 
 * choose from History of 5 last used Games/App in tool
 * More User Friendly GUI 
-
+* ***special*** for Asda Story game => _glimpse_ 🗳️  ||( track adreesses of gold / exp /hp/mp/ items ) to automate tasks more accuratly )||
 ----
 > #### **🐞Known Bugs :**
 
