@@ -51,8 +51,14 @@ Automation tool that records any given keyboard events
 * Control timing between key strokes 
 * choose from History of 5 last used Games/App in tool
 * More User Friendly GUI 
-* ***special*** for Asda Story game => _glimpse_ 🗳️  ||( track adreesses of gold / exp /hp/mp/ items ) to automate tasks more accuratly )||
+* <details>
+	<summary><em>  Special </em> </summary>
+	
+  for Asda Story game => track adreesses of gold / exp /hp/mp/ items ) to automate tasks more accuratly
+ </details> 
+	
 ----
+	
 > #### **🐞Known Bugs :**
 
 * Some Window Titles in tskmgr are inaccurate  (proccess might not have a window or other issue)
