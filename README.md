@@ -1,9 +1,12 @@
  # <center> Keyboard-Event-Recorder-tool 
-* ### _Brief:_
+* ### **Brief:**
 Automation tool that records any given keyboard events 
   and plays them to any specific window / game 
+	
+---
+> #### **📞FAQ**
 
-* ### _Where To Find my Game/App title name?_
+1) ##### _Where To Find my Game/App title name?_
 	* dont get the name from task maneger they are mostly in-accurate(Mostly a proccess name  not a Window name) instead  ***for now***   use this tool: Window spy in [`AutoHotkey`](https://www.autohotkey.com/)
 	to get accurate title name  by hovering on your app
   
