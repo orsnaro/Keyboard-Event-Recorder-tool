@@ -71,4 +71,4 @@ Automation tool that records any given keyboard events
 
 
 ----
-  <sub> &emsp;&emsp;📍 I found that most _known_ key-recording tools is  might be not working at all so I made my self one in ~3hours💙 , exe for both versions in : [Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)  📍 &emsp; </sub> 
+  <sub> &emsp;&emsp;📍 I found that most _known_ key-recording tools is  might be not working at all as I wanted so I made my self one in ~3hours💙 , exe for both versions in : [Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)  📍 &emsp; </sub> 
