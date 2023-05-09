@@ -205,7 +205,7 @@ def main_keyrec(state : bool = True) -> bool :
 		choice = None
 		while True :
 			choice =  input("\n\n (1) Use on custom window \n (2) Use on Asda Story window \r\n choice: ")
-			if choice.isnumeric() and  '1' <= int(choice) <= '2' :
+			if choice.isnumeric() and  1 <= int(choice) <= 2 :
 				break;
 			else :
 				print ("\n\n#INVALID INPUT! RETRY#")
