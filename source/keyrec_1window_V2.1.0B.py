@@ -205,7 +205,7 @@ def main_keyrec(state : bool = True) -> bool :
 		choice = None
 		while True :
 			choice =  input("\n\n (1) Use on custom window \n (2) Use on Asda Story window \r\n choice: ")
-			if choice.isnumeric() :
+			if choice.isnumeric() or  '1' <= int(choice) <= '2' :
 				break;
 			else :
 				print ("\n\n#INVALID INPUT! RETRY#")
@@ -214,12 +214,13 @@ def main_keyrec(state : bool = True) -> bool :
 		if choice == 1 :
 			window_name = str(input("\n\n Enter Your Window name: \n")).strip()
 			replay_in_window(events, key_mapping=key_mapping, replay_key='f12',window_name= window_name)
-		else :
+		elif choice == 2:
 			replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
+			
     
-		print(f"\n\n\n-> '1' New Record \n-> '0' Exit ")
-		state = bool(input())
 		os.system("cls")
+		print(f"\n\n\n-> '1' New Record \n-> '0' Exit ")
+		state = bool(int(input()))
 
 	print(
 		"\n\n\nexiting KeyRec by ORS...  \nwas made for my childhood game asda-story <3 ... \nfor win not for unix...")
