@@ -1,9 +1,12 @@
  # <center> Keyboard-Event-Recorder-tool 
-* ### _Brief:_
+* ### **Brief:**
 Automation tool that records any given keyboard events 
-  and plays them to any specific window / game 
+  and plays them to any specific window / game  .  _Try the tool now!_ ***[Latest Release](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/%23Keyboard)***
+	
+---
+> #### **📞FAQ**
 
-* ### _Where To Find my Game/App title name?_
+1) ##### _Where To Find my Game/App title name?_
 	* dont get the name from task maneger they are mostly in-accurate(Mostly a proccess name  not a Window name) instead  ***for now***   use this tool: Window spy in [`AutoHotkey`](https://www.autohotkey.com/)
 	to get accurate title name  by hovering on your app
   
@@ -51,15 +54,21 @@ Automation tool that records any given keyboard events
 * Control timing between key strokes 
 * choose from History of 5 last used Games/App in tool
 * More User Friendly GUI 
-
+* <details>
+	<summary><em>  Special </em> </summary>
+	
+  for Asda Story game => track adreesses of gold / exp /hp/mp/ items ) to automate tasks more accuratly
+ </details> 
+	
 ----
+	
 > #### **🐞Known Bugs :**
 
 * Some Window Titles in tskmgr are inaccurate  (proccess might not have a window or other issue)
 	- somtimes we hook the Window but it ignores `post message `
-* At recording somtimes record get flushed to console after done recording causing   UB (though it's not that frequent at all any more like prev versions)ttT
+* At recording somtimes record get flushed to console after done recording causing   UB (mostly cuz of holding a key a bit long though it's not that frequent at all any more like prev versions)ttT
 * recording combined keys not working
 
 
 ----
-  <sub> &emsp;&emsp;📍 I found that most _known_ key-recording tools is  might be not working at all so I made my self one in ~3hours💙 , exe for both versions in : [Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)  📍 &emsp; </sub> 
+  <sub> &emsp;&emsp;📍 I found that most _known_ key-recording tools is  might be not working at all as I wanted so I made my self one in ~3hours💙 , exe for both versions in : [Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)  📍 &emsp; </sub> 
