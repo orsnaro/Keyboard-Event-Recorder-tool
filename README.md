@@ -1,4 +1,5 @@
- # <center> Keyboard-Event-Recorder-tool 
+ # <center> Keyboard-Event-Recorder-tool  ![version badge](https://img.shields.io/badge/v2.1.0B-green?logo=github)
+
 * ### **Brief:**
 Automation tool that records any given keyboard events 
   and plays them to any specific window / game  .  _Try the tool now!_ ***[Latest Release](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/%23Keyboard)***
