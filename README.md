@@ -1,4 +1,4 @@
- # <center> Keyboard-Event-Recorder-tool  ![version badge](https://img.shields.io/badge/v2.1.0B-green?logo=github)
+ # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/v2.1.0B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/%23Keyboard)
 
 * ### **Brief:**
 Automation tool that records any given keyboard events 
