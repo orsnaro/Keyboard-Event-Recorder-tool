@@ -1,5 +1,8 @@
- # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/v2.1.0B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/%23Keyboard)  [![lastest pre release was](https://img.shields.io/github/release-date-pre/orsnaro/Keyboard-Event-Recorder-tool?label=latest%20release&color=9332af)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)
+ # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/v2.1.1B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/%23Keyboard)  [![lastest pre release was](https://img.shields.io/github/release-date-pre/orsnaro/Keyboard-Event-Recorder-tool?label=latest%20release&color=9332af)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)
 
+> [!NOTE]  
+> [V2.1.1B](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/v2.1.1B) _is out🚀_ Now you can permanently save your key records and load them ANYTIME!
+ 
 Automation tool that records any given keyboard events 
   and plays them to any specific window / game  .  _Try the tool now!_ ***[Latest Release](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)***
 	
