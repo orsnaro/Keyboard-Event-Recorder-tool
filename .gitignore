@@ -4,3 +4,6 @@ dist/*
 build/*
 dump/*
 *.spec
+.is_autovEnv  
+.is_autovEnv  
+.vscode/

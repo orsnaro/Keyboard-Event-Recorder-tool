@@ -1,4 +1,44 @@
-
+def plot3D(solutionsX: np.ndarray, solutionsY: np.ndarray, solutionsZ: np.ndarray, refEq: callable= rastrigin, showTime = 1.5, rotate_deg1 = 90, rotate_deg2=-90, isFinal = False, plotRef = False, res= [-5.12,5.12,100]):
+   '''
+   # if `showTime == -1` :  play plot for inf. time (until user manually closes code/window)
+   ---
+   ## `solutionZ` are the **fitness** values calculated via the cost function e.g.(paraboloid)
+   '''
+   # Create a meshgrid for visualization
+   x = np.linspace(res[0], res[1], res[2])
+   y = np.linspace(res[0], res[1], res[2])
+   X, Y = np.meshgrid(x, y)
+   Z = refEq([X, Y])
+   
+   # Create a 3D plot of the Rastrigin function
+   fig = plt.figure()
+   ax: plt.Axes | Axes3D = fig.add_subplot(111, projection='3d')
+   
+   #plot the reference: also plot wire frame and contour are good
+   if plotRef:
+      ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.25)
+   
+   ax.set_xlabel('x')
+   ax.set_ylabel('y')
+   ax.set_zlabel('z (fitness)')
+   
+   # Plot the solution/s found by the PSO algorithm
+   ax.set_xlim(-5.12, 5.12)
+   ax.set_ylim(-5.12, 5.12)
+   ax.set_xticks(np.linspace(-5.12, 5.12, 5))
+   ax.set_yticks(np.linspace(-5.12, 5.12, 5))
+   ax.scatter3D(solutionsX, solutionsY, solutionsZ,  color='Red')
+   
+   # Rotate the plot by setting the viewing angle
+   ax.view_init(elev=rotate_deg1, azim=rotate_deg2)
+   
+   #matplotlib by default stops all python script until you close the GUI window
+   if showTime != -1: 
+      plt.show(block= False)
+      plt.pause(showTime)
+      plt.close()
+   else:
+      plt.show()
 """
 								  Coder : Omar
 								  Version : v2.0B

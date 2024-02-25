@@ -17,7 +17,7 @@ import sys
 def record( start_key= 'f5'):
 	events : list = []
 	print("~~~~~~~~~ WELCOME TO KeyRec v1.0B by ORS ~~~~~~~~~")
-	print (f"\n-> press '{start_key}' to start record. press '{start_key}' again to stop recording")
+	print (f"\n-> press '{start_key}' to start record. press '{start_key}' again to stop recording\n >> ")
 	while True :
 		if keyboard.is_pressed(start_key) :
 			print ("\nSTARTED RECORDING...")
@@ -32,7 +32,7 @@ def record( start_key= 'f5'):
 
 # Replay the key presses until a specific button is pressed
 def replay(events, replay_key= 'f6'):
-	print (f"\n\n\n-> press '{replay_key}' to start replay. press '{replay_key}' again to stop replaying")
+	print (f"\n\n\n-> press '{replay_key}' to start replay. press '{replay_key}' again to stop replaying\n >> ")
 	while True:
 		if keyboard.is_pressed(replay_key):
 			print ("\nSTART RE-PLAYING...")
