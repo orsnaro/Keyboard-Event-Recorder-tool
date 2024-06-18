@@ -26,18 +26,20 @@
 
 import sys
 import utils
+import os
 
 
 def recording_menu() -> int:
    _user_choice :int = None
    
    IsFirstRec = not bool(utils.count_files())
+   IsFirstFav = not bool(utils.count_files(directory= utils.root_app_path + r"\favs"))
    
    print("\n\n--------------------------------")
    print("\n\n C H O O S E: ")
    print(f"\n-> '1' New Record ") 
    print(f"\n-> '2' Use last Record ")  if not IsFirstRec else print("", end="")
-   print(f"\n-> '3' Favorite Records ") if not IsFirstRec else print("", end="")
+   print(f"\n-> '3' Favorite Records ") if not IsFirstFav else print("", end="")
    print("\n-> '0' Exit ")
    print("\n\n--------------------------------")
    
@@ -58,16 +60,20 @@ def target_menu() -> int:
    _user_choice2 :int = None
    
    while True :
+      winLogFile = utils.put_user_name(utils.root_app_path + '\\' + utils.window_log_file)
+      IsFrstWindow = 1 if os.path.getsize(winLogFile) == 0 else 0
+      
       utils.flush_in_buffer()
       print("\n\n--------------------------------")
       print("\n\n C H O O S E: ")
       print("\n\n-> '1' Play KeyRec on custom window")
       print("\n-> '2' Play KeyRec on Asda Story window")
-      # print("\n-> '3' Show recent used Windows")
+      print("\n-> '3' Show recent used Windows") if not IsFrstWindow else print("", end="")
+      print("\n-> '0' Exit ")
       print("\n\n--------------------------------")
       _user_choice2 =  input(">> ")
 
-      if _user_choice2.isnumeric() and  1 <= int(_user_choice2) <= 2 :
+      if _user_choice2.isnumeric() and  0 <= int(_user_choice2) <= (3 if not IsFrstWindow else 2) :
          break
       else :
          print ("\n\n#INVALID INPUT! RETRY#")
@@ -88,11 +94,9 @@ def main_keyrec(state : bool = True) -> bool :
          Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
          EXEd using : pyinstaller module
    
-   ~WORKS IF Your GAME OR APP is out of focus even if minimized!! <3~
-   ~Key Records is auto saved to: '~\AppData\Roaming\KeyRec_Asda\history'~
-   ~Favorite Key Records is auto saved to: '~\AppData\Roaming\KeyRec_Asda\\favs'~
-   ~recent Window is auto saved to: '~\AppData\Roaming\KeyRec_Asda\recent_windows.json'~
-   ~~~~~~~~~---~~~~~~~~~---~~~~~~~~~---~~~~~~~~~---~~~~~~~~~---~~~~~~~~~
+       ~WORKS IF Your GAME OR APP is out of focus even if minimized!! <3~
+        ~KeyRec data is auto saved to: '~\AppData\Roaming\KeyRec_Asda\\'~
+     ~~~~~~~~~---~~~~~~~~~---~~~~~~~~~---~~~~~~~~~---~~~~~~~~~---~~~~~~~~~
    """)
    
    #INIT
@@ -135,9 +139,12 @@ def main_keyrec(state : bool = True) -> bool :
          utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12',window_name= window_name)
       elif user_choice2 == 2 : #use the default target window
          utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
-      # elif user_choice2 == 3 : #show recent 5 used windows and try play on one of them 
-      #    window_name = utils.get_one_of_recent_windows()
-      #    utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
+      elif user_choice2 == 3 : #show recent 5 used windows and try play on one of them 
+         window_name = utils.get_one_of_recent_windows()
+         utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
+      elif user_choice2 == 0 : #exit app loop
+         state = False
+         break
       #MENU 2 END
          
    print(

@@ -7,6 +7,7 @@
                           Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
                           EXE using : pyinstaller module
 """
+# from curses import window
 from imp import load_source
 import os 
 import win32api
@@ -27,6 +28,9 @@ import utils
 import random
 
 root_app_path = r"C:\Users\%USERNAME%\AppData\Roaming\KeyRec_Asda"
+window_log_file = "recent_windows.json"
+json_main_key = "window_log"
+default_window_name = "AsdaStory (ME)"
 
 
 def get_keys_map_dict() -> dict:
@@ -44,27 +48,16 @@ def get_keys_map_dict() -> dict:
 
    return key_mapping
 
-# def log_window_name(Wname: str):
-#     if os.path.isfile( file_abs_path ) :
-#       with open(file_abs_path, 'r') as jsonFile:
-#          events_json: str = jsonFile.read()
-#          _events_dict: dict = json.loads(events_json)
-      
-#       for event in _events_dict:
-#          one_event_dict = _events_dict[event]
-#          _events_list.append(keyboard.KeyboardEvent(**one_event_dict)) #Say with me I Love python unpacking syntax!
-   
-   
 
 def check_add_to_fav() -> str:
    rec_name: str = None
    print("\n\n--------------------------------")
    print("\n Add this record to favorites? ... (type record name or press 'enter' to skip!)")
+   utils.flush_in_buffer()
    new_fav_rec_name = (input(">> ").strip())
    print("skipped saving to favs..." if new_fav_rec_name is None or new_fav_rec_name == "" else f"OK! saving '{new_fav_rec_name}' to favs!...")
    print("\n\n--------------------------------")
    
-   print("TESTING:" +"None" if new_fav_rec_name == "" and new_fav_rec_name == None else new_fav_rec_name)
    return new_fav_rec_name if new_fav_rec_name != "" and new_fav_rec_name != None else None
 
 def load_record(file_dir: str | os.PathLike = root_app_path + r"\history", fav_rec_name: str = None) -> list[keyboard.KeyboardEvent]:
@@ -124,7 +117,7 @@ def new_record(start_key='f5'):
 
 
 # Replay the key presses to a specific application identified by its PID
-def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, replay_key: str = 'f6', stop_key: str = 'f10', window_name: str = "AsdaStory (ME)"):
+def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, replay_key: str = 'f6', stop_key: str = 'f10', window_name: str = default_window_name):
 
    # Set the window name you want to search for
 
@@ -147,6 +140,8 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
    except Exception as e :
       print(f"ERROR! probably Access is denied try running the tool as admin. details:\n {e}\n\n\n RESTARTING KeYRec tool...")
       return False
+   
+   log_window_name(window_name)
  
    # print to user some info about window
    rect = win32gui.GetWindowRect(hwnd)
@@ -292,6 +287,10 @@ def count_files(directory= root_app_path + r"\history"):
 def make_data_directory(directory= root_app_path) -> int:
    history_directory = put_user_name(directory+r"\history")
    favorites_directory = put_user_name(directory+r"\favs")
+   recent_windows_path = put_user_name(root_app_path + r"\recent_windows.json")
+   
+   with open(recent_windows_path, 'a') as tmp:
+      pass #olny to create the file if it's isn't there
    
    #os.system("mkdir..") returns 0 means sucess but else wise it prints to the console! so will check if exists first to avoid un-wanted os module msgs to appear to enduser's console
    mkdir_state = os.system(f"mkdir \"{history_directory}\"") if not os.path.exists(history_directory) else 1 #1 means that couldn't make directory: already exists or any other issues (os.system() returns zero on shell cmd success)
@@ -305,7 +304,7 @@ def put_user_name(_path_to_edit: str) -> str:
    _path_to_edit = os.path.normpath(_path_to_edit) #normpath()handels forward slashed and etc..
    return _path_to_edit
 
-def process_file_path(isNew = False, _file_dir: str = root_app_path + r"\history", _fav_rec_name : str = None) -> os.PathLike | str:
+def process_file_path(isNew = False, _file_dir: str = root_app_path + r"\history", _fav_rec_name : str = None, is_window_names_log= False) -> os.PathLike | str:
    # we'll not call this method unless the dir exist and there is old records so no actual need to handle this check inside this func
    _file_dir = put_user_name(_file_dir)
    
@@ -313,12 +312,40 @@ def process_file_path(isNew = False, _file_dir: str = root_app_path + r"\history
    if os.path.isdir(_file_dir): #actually it handled on caller but let's make it future proof :D
       
       
-      file_no = count_files(directory= _file_dir)  # files numbering starts with one e.g.(keyrec1) is first file (not needed if file does have name and if file does have name is to be saved in root\favs only!)
-      file_name = f"keyrec{file_no + 1 if isNew else file_no}" + ".json" if _fav_rec_name == None else _fav_rec_name + ".json"
+      if(not is_window_names_log):
+         file_no = count_files(directory= _file_dir)  # files numbering starts with one e.g.(keyrec1) is first file (not needed if file does have name and if file does have name is to be saved in root\favs only!)
+         file_name = f"keyrec{file_no + 1 if isNew else file_no}" + ".json" if _fav_rec_name == None else _fav_rec_name + ".json"
+      else:
+         file_name = window_log_file
+         
       file_abs_path = os.path.join(_file_dir, file_name)
       file_abs_path = os.path.normpath(file_abs_path)
       
    return file_abs_path
+
+   
+def log_window_name(Wname: str):
+   
+   file_abs_path: os.PathLike | str = process_file_path(_file_dir= root_app_path, is_window_names_log= True)
+   
+   if os.path.isfile( file_abs_path ) :
+      
+      try:
+         with open(file_abs_path, 'r') as jsonFile:
+            window_log_json: str = jsonFile.read()
+            _window_log_dict: dict = json.loads(window_log_json)
+            
+         _window_log_dict[json_main_key].append({Wname: time.ctime()})
+         window_log_json = json.dumps(_window_log_dict, ensure_ascii= False, indent= 4)
+      except Exception as e :
+         print(f"\n (creating new window log file...: {e})")
+         new_json_dict = {json_main_key: [{Wname: time.ctime()}]}
+         window_log_json = json.dumps(new_json_dict, ensure_ascii= False, indent= 4)
+
+         
+      with open(file_abs_path, 'w') as jsonFile:
+         jsonFile.write(window_log_json)
+                          
 
 def save_record(rec_to_save: list, save_dir: str = root_app_path, add_to_favorites_list = False, fav_rec_name = None):
    #NOTE: also you can utilize 'keyboard.KeyboardEvent.to_json()'
@@ -366,11 +393,15 @@ def get_favs_list(limit= 20) -> list :
    
    return favs_list, limit
 
-def print_favs_list(favs_list : list):
+def print_options(options_list : list):
+   
+   if(options_list == None):
+      return None
+   
    _cnt = 0
    print("\n\n")
-   for fav in favs_list :
-      print(f" \t-> '{_cnt}' {fav} ")
+   for option in options_list :
+      print(f" \t-> '{_cnt}' {option} ")
       _cnt += 1
 
 
@@ -380,7 +411,7 @@ def get_fav_rec_events():
    print(f"(showing top {limit} favorite records...)")
    print("\n\n--------------------------------")
    print("\nC H O O S E   R E C O R D: ")
-   print_favs_list(favs_ls)
+   print_options(favs_ls)
    print("\n\n--------------------------------")
    
    fav_idx =  int(input(">> ").strip())
@@ -391,23 +422,44 @@ def get_fav_rec_events():
    return _events
 
 
-# def get_windows_names_set(_limit: int) -> list:
-#    windows_names = set()
+def get_windows_names(_limit: int) -> list:
+   n_recent_window_names = []
+   file_abs_path: os.PathLike | str = process_file_path(_file_dir= root_app_path, is_window_names_log= True)
    
+   if os.path.isfile( file_abs_path ) :
+      with open(file_abs_path, 'r') as jsonFile:
+         window_log_json: str = jsonFile.read()
    
-#    return windows_names
+   if(window_log_json == None or window_log_json == "") :
+      return None
+              
+   _window_log_dict: dict = json.loads(window_log_json)
+   json_ls_pairs = list(_window_log_dict[json_main_key])
    
-# def get_one_of_recent_windows():
-#    flush_in_buffer()
-#    limit = 5
-#    windows_set = get_windows_names_set(_limit = limit)
-#    print(f"(showing last {limit} used Windows...)")
-#    print("\n\n--------------------------------")
-#    print("\nC H O O S E   R E C O R D: ")
-#    print_favs_list(favs_ls)
-#    print("\n\n--------------------------------")
+   for pair in json_ls_pairs :
+      for name, time in pair.items():
+         n_recent_window_names += [time] #in accending order (we need to get the most recent so take from end of list )
+         
+   can_get_cnt = min(_limit, len(n_recent_window_names))
    
+   n_recent_window_names.reverse()
+   n_recent_window_names = n_recent_window_names[0:can_get_cnt]
    
+   return n_recent_window_names
+   
+def get_one_of_recent_windows() -> str:
+   flush_in_buffer()
+   limit = 5
+   windows = get_windows_names(_limit = limit)
+   print(f"(showing last {limit} used Windows...)")
+   print("\n\n--------------------------------")
+   print("\nC H O O S E   R E C O R D: ")
+   print("NO Options") if windows == None else print_options(windows)
+   print("\n\n--------------------------------")
+   option_idx =  int(input(">> ").strip())
+   
+   chosen_window_name: str = windows[option_idx] if windows != None else default_window_name #get the file name only with out extension '.json'
+   return chosen_window_name
    
    
 def flush_in_buffer():
