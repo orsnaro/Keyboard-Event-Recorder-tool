@@ -438,7 +438,7 @@ def get_windows_names(_limit: int) -> list:
    
    for pair in json_ls_pairs :
       for name, time in pair.items():
-         n_recent_window_names += [time] #in accending order (we need to get the most recent so take from end of list )
+         n_recent_window_names += [name] #in accending order (we need to get the most recent so take from end of list )
          
    can_get_cnt = min(_limit, len(n_recent_window_names))
    
