@@ -7,3 +7,4 @@ dump/*
 .is_autovEnv  
 .is_autovEnv  
 .vscode/
+source/build/*
