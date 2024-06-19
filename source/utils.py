@@ -68,7 +68,7 @@ def load_record(file_dir: str | os.PathLike = root_app_path + r"\history", fav_r
    file_abs_path: os.PathLike | str = process_file_path(_file_dir= file_dir, _fav_rec_name = (fav_rec_name if fav_rec_name != None else None) )
       
    if os.path.isfile( file_abs_path ) :
-      with open(file_abs_path, 'r') as jsonFile:
+      with open(file_abs_path, 'r', encoding="utf-8") as jsonFile:
          events_json: str = jsonFile.read()
          _events_dict = json.loads(events_json)
       
@@ -294,7 +294,7 @@ def make_data_directory(directory= root_app_path) -> int:
    mkdir_state = os.system(f"mkdir \"{history_directory}\"") if not os.path.exists(history_directory) else 1 #1 means that couldn't make directory: already exists or any other issues (os.system() returns zero on shell cmd success)
    mkdir_state = (os.system(f"mkdir \"{favorites_directory}\"") if not os.path.exists(favorites_directory) else 1) and mkdir_state #do 'and' with prev mkdir state to ensure return if for both dirs creation status
    
-   with open(recent_windows_path, 'a') as tmp:
+   with open(recent_windows_path, 'a', encoding="utf-8") as tmp:
       pass #olny to create the file if it's isn't there
    
    return mkdir_state
@@ -333,7 +333,7 @@ def log_window_name(Wname: str):
    if os.path.isfile( file_abs_path ) :
       
       try:
-         with open(file_abs_path, 'r') as jsonFile:
+         with open(file_abs_path, 'r', encoding="utf-8") as jsonFile:
             window_log_json: str = jsonFile.read()
             _window_log_dict: dict = json.loads(window_log_json)
             
@@ -345,7 +345,7 @@ def log_window_name(Wname: str):
          window_log_json = json.dumps(new_json_dict, ensure_ascii= False, indent= 4)
 
          
-      with open(file_abs_path, 'w') as jsonFile:
+      with open(file_abs_path, 'w', encoding="utf-8") as jsonFile:
          jsonFile.write(window_log_json)
                           
 
@@ -372,12 +372,12 @@ def save_record(rec_to_save: list, save_dir: str = root_app_path, add_to_favorit
       events_dict[str(i)] = event_attrs
       
    #save 
-   with open(history_file_path, 'w') as jsonFile:
+   with open(history_file_path, 'w', encoding="utf-8") as jsonFile:
       events_json: str= json.dumps(events_dict, ensure_ascii= False, indent= 4)
       jsonFile.write(events_json)      
    
    if (add_to_favorites_list):
-      with open(fav_file_path, 'w') as jsonFile:
+      with open(fav_file_path, 'w', encoding="utf-8") as jsonFile:
          events_json: str= json.dumps(events_dict, ensure_ascii= False, indent= 4)
          jsonFile.write(events_json)      
    
@@ -412,7 +412,7 @@ def get_windows_names(_limit: int) -> list:
    file_abs_path: os.PathLike | str = process_file_path(_file_dir= root_app_path, is_window_names_log= True)
    
    if os.path.isfile( file_abs_path ) :
-      with open(file_abs_path, 'r') as jsonFile:
+      with open(file_abs_path, 'r', encoding="utf-8") as jsonFile:
          window_log_json: str = jsonFile.read()
    
    if(window_log_json == None or window_log_json == "") :

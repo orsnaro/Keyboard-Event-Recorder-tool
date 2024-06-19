@@ -60,7 +60,7 @@ def load_last_record(file_dir: str | os.PathLike = r"C:\Users\%USERNAME%\AppData
    file_abs_path: os.PathLike | str = utils.process_file_path(_file_dir= file_dir)
       
    if os.path.isfile( file_abs_path ) :
-      with open(file_abs_path, 'r') as jsonFile:
+      with open(file_abs_path, 'r', encoding="utf-8") as jsonFile:
          events_json: str = jsonFile.read()
          _events_dict = json.loads(events_json)
       
