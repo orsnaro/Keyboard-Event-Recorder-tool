@@ -1,4 +1,4 @@
- # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/v2.1.1B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/v2.1.1B)  [![lastest pre release was](https://img.shields.io/github/release-date-pre/orsnaro/Keyboard-Event-Recorder-tool?label=latest%20release&color=9332af)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)
+ # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/v2.1.2B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/v2.1.2B)  [![lastest pre release was](https://img.shields.io/github/release-date-pre/orsnaro/Keyboard-Event-Recorder-tool?label=latest%20release&color=9332af)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)
 
 > [!NOTE]  
 > [V2.1.2B](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/v2.1.2B) _is out🚀_ Now you can save you favorite records! and swiftly re-use recently used apps!
