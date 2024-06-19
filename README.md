@@ -46,7 +46,7 @@ Automation tool that records any given keyboard events
 
 * choose from History of 5 last used Games/App in tool
 
-* favkeyorites records list for easy re-use of the tool
+* favorite records list for easy re-use of the tool
 
 * works perfectly with asda story game which was main goal of tool 
 -----
