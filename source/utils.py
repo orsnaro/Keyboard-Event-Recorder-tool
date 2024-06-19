@@ -1,7 +1,7 @@
 """
-                          Coder : Omar
+                          Coder : Omar rs
                           Version : v2.1.2B
-                          version Date :  17 / 6 / 2024
+                          version Date :  19 / 6 / 2024
                           Code Type : key recorder app for specific app window
                           Title : KeyRec-Asda
                           Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
@@ -55,7 +55,7 @@ def check_add_to_fav() -> str:
    print("\n Add this record to favorites? ... (type record name or press 'enter' to skip!)")
    utils.flush_in_buffer()
    new_fav_rec_name = (input(">> ").strip())
-   print("skipped saving to favs..." if new_fav_rec_name is None or new_fav_rec_name == "" else f"OK! saving '{new_fav_rec_name}' to favs!...")
+   print("skipped saving to favs..." if new_fav_rec_name is None or new_fav_rec_name == "" else f"OK! saving '{new_fav_rec_name}' to favs!...(similar names  overwrites old files!)")
    print("\n\n--------------------------------")
    
    return new_fav_rec_name if new_fav_rec_name != "" and new_fav_rec_name != None else None
@@ -126,7 +126,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
    
    
    if hwnd == False  or window_name == '': #retry
-      print("\n\n ##Error Finding Your Window title retry please ...##\n\n")
+      print("\n\n (Error! Finding Your Window title) \nretry please...\n\n")
       return False #use it later
       
  
@@ -138,7 +138,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
       # now two threads can share input like keyboard state and crnt focus window
       win32process.AttachThreadInput(crnt_thread_id , target_proc_id , True)
    except Exception as e :
-      print(f"ERROR! probably Access is denied try running the tool as admin. details:\n {e}\n\n\n RESTARTING KeYRec tool...")
+      print(f"(ERROR! probably Access is denied try running the tool as admin.) details:\n {e}\n\n\n RESTARTING KeYRec tool...")
       return False
    
    log_window_name(window_name)
@@ -401,36 +401,14 @@ def print_options(options_list : list):
       return None
    
    _cnt = 0
-   print("\n\n")
+   print("\n")
    for option in options_list :
-      print(f" \t-> '{_cnt}' {option} ")
+      print(f" \t-> '{_cnt}' {option} \n")
       _cnt += 1
 
 
-def get_fav_rec_events():
-   flush_in_buffer()
-   favs_ls, limit =  get_favs_list()
-   print(f"(showing top {limit} favorite records...)")
-   print("\n\n--------------------------------")
-   print("\nC H O O S E   R E C O R D: ")
-   print_options(favs_ls)
-   print("\n\n--------------------------------")
-   
-   fav_idx =  int(input(">> ").strip())
-   
-   if(fav_idx >= len(favs_ls)):
-      print("\n(INVALID INPUT! retry...)")
-      get_fav_rec_events()
-   
-   fav_rec_name: str = favs_ls[fav_idx][0:-5] #get the file name only with out extension ',jons'
-   
-   _events = load_record(root_app_path + r"\favs", fav_rec_name)
-      
-   return _events
-
-
 def get_windows_names(_limit: int) -> list:
-   n_recent_window_names = []
+   all_loged_window_names = []
    file_abs_path: os.PathLike | str = process_file_path(_file_dir= root_app_path, is_window_names_log= True)
    
    if os.path.isfile( file_abs_path ) :
@@ -445,29 +423,25 @@ def get_windows_names(_limit: int) -> list:
    
    for pair in json_ls_pairs :
       for name, time in pair.items():
-         n_recent_window_names += [name] #in accending order (we need to get the most recent so take from end of list )
+         all_loged_window_names += [name] #in accending order (we need to get the most recent so take from end of list )
          
-   can_get_cnt = min(_limit, len(n_recent_window_names))
+   tot_win_cnt = len(all_loged_window_names)
+   can_get_cnt = min(_limit, tot_win_cnt)
    
-   n_recent_window_names.reverse()
+   n_recent_window_names = []
+   lst_idx = tot_win_cnt - 1 # 9
+   stop_at_idx = lst_idx - can_get_cnt # 8
+   for i in range (lst_idx, stop_at_idx, -1): #take in reverse to put the latest on top of list + skip duplicates + stop at maximum no of windows we can show
+      if all_loged_window_names[i] not in n_recent_window_names: 
+         n_recent_window_names += [all_loged_window_names[i]]
+      else:
+         continue  
+         
+   
+   
    n_recent_window_names = n_recent_window_names[0:can_get_cnt]
    
    return n_recent_window_names
-   
-def get_one_of_recent_windows() -> str:
-   flush_in_buffer()
-   limit = 5
-   windows = get_windows_names(_limit = limit)
-   print(f"(showing last {limit} used Windows...)")
-   print("\n\n--------------------------------")
-   print("\nC H O O S E   R E C O R D: ")
-   print("NO Options") if windows == None else print_options(windows)
-   print("\n\n--------------------------------")
-   option_idx =  int(input(">> ").strip())
-   
-   chosen_window_name: str = windows[option_idx] if windows != None else default_window_name #get the file name only with out extension '.json'
-   return chosen_window_name
-   
    
 def flush_in_buffer():
    '''
