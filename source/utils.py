@@ -289,12 +289,14 @@ def make_data_directory(directory= root_app_path) -> int:
    favorites_directory = put_user_name(directory+r"\favs")
    recent_windows_path = put_user_name(root_app_path + r"\recent_windows.json")
    
-   with open(recent_windows_path, 'a') as tmp:
-      pass #olny to create the file if it's isn't there
    
    #os.system("mkdir..") returns 0 means sucess but else wise it prints to the console! so will check if exists first to avoid un-wanted os module msgs to appear to enduser's console
    mkdir_state = os.system(f"mkdir \"{history_directory}\"") if not os.path.exists(history_directory) else 1 #1 means that couldn't make directory: already exists or any other issues (os.system() returns zero on shell cmd success)
    mkdir_state = (os.system(f"mkdir \"{favorites_directory}\"") if not os.path.exists(favorites_directory) else 1) and mkdir_state #do 'and' with prev mkdir state to ensure return if for both dirs creation status
+   
+   with open(recent_windows_path, 'a') as tmp:
+      pass #olny to create the file if it's isn't there
+   
    return mkdir_state
 
 
@@ -415,6 +417,11 @@ def get_fav_rec_events():
    print("\n\n--------------------------------")
    
    fav_idx =  int(input(">> ").strip())
+   
+   if(fav_idx >= len(favs_ls)):
+      print("\n(INVALID INPUT! retry...)")
+      get_fav_rec_events()
+   
    fav_rec_name: str = favs_ls[fav_idx][0:-5] #get the file name only with out extension ',jons'
    
    _events = load_record(root_app_path + r"\favs", fav_rec_name)

@@ -44,8 +44,11 @@ Automation tool that records any given keyboard events
 
 * random timing between key strokes 
 
-* works perfectly with asda story game which was main goal of tool 
+* choose from History of 5 last used Games/App in tool
 
+* favkeyorites records list for easy re-use of the tool
+
+* works perfectly with asda story game which was main goal of tool 
 -----
 
 > #### **✨UPCOMING FEATURES:**
@@ -55,7 +58,7 @@ Automation tool that records any given keyboard events
 * Select App By pointing to it using mouse hover on App
 * Record mouse keys
 * Control timing between key strokes 
-* choose from History of 5 last used Games/App in tool *(Done Partially)*
+
 * More User Friendly GUI 
 * <details>
 	<summary><em>  Special </em> </summary>
@@ -70,7 +73,8 @@ Automation tool that records any given keyboard events
 * Some Window Titles in tskmgr are inaccurate  (proccess might not have a window or other issue)
 	- somtimes we hook the Window but it ignores `post message `
 * recording combined keys not working
-
+* some short records craches the tool
+* some keys like `insert` crashes the tool
 
 ----
   <sub> &emsp;&emsp;📍 I found that most _known_ key-recording tools might  not work at all as I wanted so I made my self one in ~3hours💙 , exe for both versions in : [Tool-dir](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/tree/master/KeyRec-tool/)  📍 &emsp; </sub> 
