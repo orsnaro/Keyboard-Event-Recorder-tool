@@ -27,10 +27,15 @@ import json
 import utils
 import random
 
-root_app_path = r"C:\Users\%USERNAME%\AppData\Roaming\KeyRec_Asda"
-window_log_file = "recent_windows.json"
-json_main_key = "window_log"
-default_window_name = "AsdaStory (AREAGAME)"
+
+defaults_dict = {
+   "root_app_path"       : r"C:\Users\%USERNAME%\AppData\Roaming\KeyRec_Asda",
+   "window_log_file"     : "recent_windows.json",
+   "json_main_key"       : "window_log",
+   "window_name"         : "AsdaStory (AREAGAME)",
+   "toggle_play_key"     : "f12",
+   "toggle_record_key"   : "f12"
+}
 
 
 def get_keys_map_dict() -> dict:
@@ -60,7 +65,7 @@ def check_add_to_fav() -> str:
    
    return new_fav_rec_name if new_fav_rec_name != "" and new_fav_rec_name != None else None
 
-def load_record(file_dir: str | os.PathLike = root_app_path + r"\history", fav_rec_name: str = None) -> list[keyboard.KeyboardEvent]:
+def load_record(file_dir: str | os.PathLike = defaults_dict["root_app_path"] + r"\history", fav_rec_name: str = None) -> list[keyboard.KeyboardEvent]:
    # we'll not call this method unless the dir exist and there is old records so no need to handle this inside
    _events_list: list[keyboard.KeyboardEvent] = []
    
@@ -84,7 +89,7 @@ def load_record(file_dir: str | os.PathLike = root_app_path + r"\history", fav_r
 
 
 # Record the key presses
-def new_record(start_key='f5'):
+def new_record(start_key='f10'):
    events: list[keyboard.KeyboardEvent] = []
   
    print("\n\n--------------------------------")
@@ -95,7 +100,7 @@ def new_record(start_key='f5'):
    while True:
       if keyboard.is_pressed(start_key):
          print("\n\n--------------------------------")
-         print("\nSTARTED RECORDING...")
+         print(f"\nSTARTED RECORDING...({start_key} again to stop)")
 
          utils.flush_in_buffer()
          # exprimental: suppress=True the recorded events are not sent to the operating system, effectively blocking them from being observed by other applications
@@ -117,7 +122,7 @@ def new_record(start_key='f5'):
 
 
 # Replay the key presses to a specific application identified by its PID
-def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, replay_key: str = 'f6', stop_key: str = 'f10', window_name: str = default_window_name):
+def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, replay_key: str = defaults_dict["toggle_play_key"], stop_key: str = defaults_dict["toggle_record_key"], window_name: str = defaults_dict["window_name"]):
 
    # Set the window name you want to search for
 
@@ -160,7 +165,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
    while True: #NOTE: most inner loop controls terminating this loop
       if keyboard.is_pressed(replay_key):
          while keyboard.is_pressed(replay_key) : pass
-         print("\nSTARTED PLAYING!...(f10 again to stop)")
+         print(f"\nSTARTED PLAYING!...({replay_key} again to stop)")
          # time.sleep(0.1)
 
          while True:
@@ -264,7 +269,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
                         return True  #success use it later
 
 
-def count_files(directory= root_app_path + r"\history"):
+def count_files(directory= defaults_dict["root_app_path"] + r"\history"):
     """
     Counts the number of files in a directory, including subdirectories if desired.
 
@@ -284,10 +289,10 @@ def count_files(directory= root_app_path + r"\history"):
 
     return file_count
  
-def make_data_directory(directory= root_app_path) -> int:
+def make_data_directory(directory= defaults_dict["root_app_path"]) -> int:
    history_directory = put_user_name(directory+r"\history")
    favorites_directory = put_user_name(directory+r"\favs")
-   recent_windows_path = put_user_name(root_app_path + r"\recent_windows.json")
+   recent_windows_path = put_user_name(defaults_dict["root_app_path"] + r"\recent_windows.json")
    
    
    #os.system("mkdir..") returns 0 means sucess but else wise it prints to the console! so will check if exists first to avoid un-wanted os module msgs to appear to enduser's console
@@ -306,7 +311,7 @@ def put_user_name(_path_to_edit: str) -> str:
    _path_to_edit = os.path.normpath(_path_to_edit) #normpath()handels forward slashed and etc..
    return _path_to_edit
 
-def process_file_path(isNew = False, _file_dir: str = root_app_path + r"\history", _fav_rec_name : str = None, is_window_names_log= False) -> os.PathLike | str:
+def process_file_path(isNew = False, _file_dir: str = defaults_dict["root_app_path"] + r"\history", _fav_rec_name : str = None, is_window_names_log= False) -> os.PathLike | str:
    # we'll not call this method unless the dir exist and there is old records so no actual need to handle this check inside this func
    _file_dir = put_user_name(_file_dir)
    
@@ -318,7 +323,7 @@ def process_file_path(isNew = False, _file_dir: str = root_app_path + r"\history
          file_no = count_files(directory= _file_dir)  # files numbering starts with one e.g.(keyrec1) is first file (not needed if file does have name and if file does have name is to be saved in root\favs only!)
          file_name = f"keyrec{file_no + 1 if isNew else file_no}" + ".json" if _fav_rec_name == None else _fav_rec_name + ".json"
       else:
-         file_name = window_log_file
+         file_name = defaults_dict["window_log_file"]
          
       file_abs_path = os.path.join(_file_dir, file_name)
       file_abs_path = os.path.normpath(file_abs_path)
@@ -328,7 +333,7 @@ def process_file_path(isNew = False, _file_dir: str = root_app_path + r"\history
    
 def log_window_name(Wname: str):
    
-   file_abs_path: os.PathLike | str = process_file_path(_file_dir= root_app_path, is_window_names_log= True)
+   file_abs_path: os.PathLike | str = process_file_path(_file_dir= defaults_dict["root_app_path"], is_window_names_log= True)
    
    if os.path.isfile( file_abs_path ) :
       
@@ -337,11 +342,11 @@ def log_window_name(Wname: str):
             window_log_json: str = jsonFile.read()
             _window_log_dict: dict = json.loads(window_log_json)
             
-         _window_log_dict[json_main_key].append({Wname.strip(): time.ctime()})
+         _window_log_dict[defaults_dict["json_main_key"]].append({Wname.strip(): time.ctime()})
          window_log_json = json.dumps(_window_log_dict, ensure_ascii= False, indent= 4)
       except Exception as e :
          print(f"\n (creating new window log file...: {e})")
-         new_json_dict = {json_main_key: [{Wname.strip(): time.ctime()}]}
+         new_json_dict = {defaults_dict["json_main_key"]: [{Wname.strip(): time.ctime()}]}
          window_log_json = json.dumps(new_json_dict, ensure_ascii= False, indent= 4)
 
          
@@ -349,7 +354,7 @@ def log_window_name(Wname: str):
          jsonFile.write(window_log_json)
                           
 
-def save_record(rec_to_save: list, save_dir: str = root_app_path, add_to_favorites_list = False, fav_rec_name = None):
+def save_record(rec_to_save: list, save_dir: str = defaults_dict["root_app_path"], add_to_favorites_list = False, fav_rec_name = None):
    #NOTE: also you can utilize 'keyboard.KeyboardEvent.to_json()'
    
    # save_dir = put_user_name(save_dir)
@@ -383,7 +388,7 @@ def save_record(rec_to_save: list, save_dir: str = root_app_path, add_to_favorit
    
 def get_favs_list(limit= 20) -> list :
    favs_list : list = []
-   favs_dir = root_app_path + r"\favs"
+   favs_dir = defaults_dict["root_app_path"] + r"\favs"
    
    favs_dir = put_user_name(favs_dir)
    
@@ -409,7 +414,7 @@ def print_options(options_list : list):
 
 def get_windows_names(_limit: int) -> list:
    all_loged_window_names = []
-   file_abs_path: os.PathLike | str = process_file_path(_file_dir= root_app_path, is_window_names_log= True)
+   file_abs_path: os.PathLike | str = process_file_path(_file_dir= defaults_dict["root_app_path"], is_window_names_log= True)
    
    if os.path.isfile( file_abs_path ) :
       with open(file_abs_path, 'r', encoding="utf-8") as jsonFile:
@@ -419,7 +424,7 @@ def get_windows_names(_limit: int) -> list:
       return None
               
    _window_log_dict: dict = json.loads(window_log_json)
-   json_ls_pairs = list(_window_log_dict[json_main_key])
+   json_ls_pairs = list(_window_log_dict[defaults_dict["json_main_key"]])
    
    for pair in json_ls_pairs :
       for name, time in pair.items():

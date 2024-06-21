@@ -30,7 +30,7 @@ def get_fav_rec_events():
    else:# ok! valid input!
       fav_rec_name: str = favs_ls[fav_idx][0:-5] #get the file name only with out extension ',jons'
       
-      _events = utils.load_record(utils.root_app_path + r"\favs", fav_rec_name)
+      _events = utils.load_record(utils.defaults_dict["root_app_path"] + r"\favs", fav_rec_name)
          
       return _events
       
@@ -61,7 +61,7 @@ def recording_menu() -> int:
    _user_choice :int = None
    
    IsFirstRec = not bool(utils.count_files())
-   IsFirstFav = not bool(utils.count_files(directory= utils.root_app_path + r"\favs"))
+   IsFirstFav = not bool(utils.count_files(directory= utils.defaults_dict["root_app_path"] + r"\favs"))
    
    print("\n\n--------------------------------")
    print("\n\n C H O O S E: ")
@@ -88,7 +88,7 @@ def target_menu() -> int:
    _user_choice2 :int = None
    
    while True :
-      winLogFile = utils.put_user_name(utils.root_app_path + '\\' + utils.window_log_file)
+      winLogFile = utils.put_user_name(utils.defaults_dict["root_app_path"] + '\\' + utils.defaults_dict["window_log_file"])
       IsFrstWindow = 1 if os.path.getsize(winLogFile) == 0 else 0
       
       utils.flush_in_buffer()
