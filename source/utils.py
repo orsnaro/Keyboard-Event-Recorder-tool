@@ -174,18 +174,19 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
          print(f"\nSTARTED PLAYING!...({replay_key} again to stop)")
          # time.sleep(0.1)
 
+         notedHiddenOnce = False
          while True:
             #next 2 lines brings window you want to focus and show  it at top most
             # win32gui.SetForegroundWindow(hwnd)
             # events = events[:-1]
             
             #notify user that window is hidden only once when it starts being
-            notedOnce = False
-            if not win32gui.IsWindowVisible(hwnd) and not notedOnce :
-               print (f"Note: window minimized or hidden")
-               notedOnce = True
-            else:
-               notedOnce = False
+            if not win32gui.IsWindowVisible(hwnd) and not notedHiddenOnce:
+               print (f"Note: window '{window_name}' is minimized or hidden")
+               notedHiddenOnce = True
+            elif win32gui.IsWindowVisible(hwnd) and notedHiddenOnce:
+               print (f"Visible again!")
+               notedHiddenOnce = False
                
                
             for event in events:
@@ -260,7 +261,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
                            print(f"ERROR! probably target app has terminated. details:\n {e} \n\n\n RESTARTING KeYRec tool...")
                            return False
                         
-                        print("\nUN-PAUSED! continue PLAYING...")
+                        print(f"\nUN-PAUSED! continue PLAYING...({replay_key} again to pause)")
                         break
 
                      elif keyboard.is_pressed(stop_key): #STOP AND RETURN TO MAIN
