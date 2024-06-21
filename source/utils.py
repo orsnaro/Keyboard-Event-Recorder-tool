@@ -34,7 +34,7 @@ defaults_dict = {
    "json_main_key"       : "window_log",
    "window_name"         : "AsdaStory (AREAGAME)",
    "toggle_play_key"     : "f12",
-   "toggle_record_key"   : "f12"
+   "toggle_record_key"   : "f10"
 }
 
 
@@ -230,7 +230,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
                   print(
                      f"\n  -> '{replay_key}' again to UN-PAUSE")
                   print(
-                     f"  -> '{stop_key}'  stop & go to Main menu ")
+                     f"  -> '{stop_key}' stop & go to Main menu ")
                   print("\n\n--------------------------------")
                   print(">> ", end="")
       
