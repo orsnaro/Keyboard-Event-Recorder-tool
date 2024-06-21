@@ -30,7 +30,7 @@ import random
 root_app_path = r"C:\Users\%USERNAME%\AppData\Roaming\KeyRec_Asda"
 window_log_file = "recent_windows.json"
 json_main_key = "window_log"
-default_window_name = "AsdaStory (ME)"
+default_window_name = "AsdaStory (AREAGAME)"
 
 
 def get_keys_map_dict() -> dict:
@@ -160,7 +160,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
    while True: #NOTE: most inner loop controls terminating this loop
       if keyboard.is_pressed(replay_key):
          while keyboard.is_pressed(replay_key) : pass
-         print("\nSTARTED PLAYING!...")
+         print("\nSTARTED PLAYING!...(f10 again to stop)")
          # time.sleep(0.1)
 
          while True:
