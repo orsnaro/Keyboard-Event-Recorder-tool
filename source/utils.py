@@ -120,6 +120,12 @@ def new_record(start_key='f10'):
    del events
    return events_done
 
+def  waitLoop(waitTime: float, instant_stop_key):
+   startT = time.monotonic()
+   while time.monotonic() - startT < waitTime :
+      if keyboard.is_pressed(instant_stop_key):
+         return True
+   return False
 
 # Replay the key presses to a specific application identified by its PID
 def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, replay_key: str = defaults_dict["toggle_play_key"], stop_key: str = defaults_dict["toggle_record_key"], window_name: str = defaults_dict["window_name"]):
@@ -172,12 +178,17 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
             #next 2 lines brings window you want to focus and show  it at top most
             # win32gui.SetForegroundWindow(hwnd)
             # events = events[:-1]
-    
-            for event in events:
+            
+            #notify user that window is hidden only once when it starts being
+            notedOnce = False
+            if not win32gui.IsWindowVisible(hwnd) and not notedOnce :
+               print (f"Note: window minimized or hidden")
+               notedOnce = True
+            else:
+               notedOnce = False
                
-               if not win32gui.IsWindowVisible(hwnd) :
-                  print (f"Note: window minimized or hidden")
-     
+               
+            for event in events:
                # convert gotten physical key code( scan code ) to vk code and pass booth
                scan_code = event.scan_code
                vk_code   = win32api.MapVirtualKey( scan_code , 1) #map or convert  scan code to vk code
@@ -208,10 +219,11 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
                   else : 
                      print (f"This Window({window_name})  doesn't Exist anymore! \n RESTARTING KeYRec tool... ")
                      return False
-    
-               time.sleep(round(random.uniform(0.1, 0.4), 2))
+                  
+               rand_sleep_time = round(random.uniform(0.025, 0.250), 3)
+               isPressedInWaitLoop = waitLoop(rand_sleep_time, instant_stop_key= replay_key)
    
-               if keyboard.is_pressed(replay_key): #listen while playing if pause key pressed
+               if keyboard.is_pressed(replay_key) or isPressedInWaitLoop: #listen while playing if pause key pressed
                   while keyboard.is_pressed(replay_key) : pass
                   utils.flush_in_buffer()
                   # keyboard.release(replay_key)

@@ -73,13 +73,18 @@ def recording_menu() -> int:
    
    try:
       utils.flush_in_buffer()
+      _user_choice: str = input(">> ").strip()
       
-      _user_choice = int(input(">> ").strip())
-      if IsFirstRec and _user_choice == 2: raise #handle if user choosed 2 even if the option is hidden
+      if not _user_choice.isnumeric(): raise Exception
+      _user_choice = int(_user_choice)
+      
+      if _user_choice < 0: raise Exception
+      if IsFirstRec and _user_choice >= 2: raise Exception #handle if user choosed 2 even if the option is hidden
+      if IsFirstFav and _user_choice >= 3: raise Exception #handle if user choosed 3 even if the option is hidden
         
-   except Exception() as e:
+   except Exception as e:
       # os.system("cls")
-      print(f"\n #ERROR! you've mostly entered an invalid input! \nReloading...")
+      print(f"\n ERROR! you've mostly entered an invalid input! \nReloading...")
       _user_choice = recording_menu()
          
    return _user_choice
