@@ -337,11 +337,11 @@ def log_window_name(Wname: str):
             window_log_json: str = jsonFile.read()
             _window_log_dict: dict = json.loads(window_log_json)
             
-         _window_log_dict[json_main_key].append({Wname: time.ctime()})
+         _window_log_dict[json_main_key].append({Wname.strip(): time.ctime()})
          window_log_json = json.dumps(_window_log_dict, ensure_ascii= False, indent= 4)
       except Exception as e :
          print(f"\n (creating new window log file...: {e})")
-         new_json_dict = {json_main_key: [{Wname: time.ctime()}]}
+         new_json_dict = {json_main_key: [{Wname.strip(): time.ctime()}]}
          window_log_json = json.dumps(new_json_dict, ensure_ascii= False, indent= 4)
 
          
@@ -423,7 +423,7 @@ def get_windows_names(_limit: int) -> list:
    
    for pair in json_ls_pairs :
       for name, time in pair.items():
-         all_loged_window_names += [name] #in accending order (we need to get the most recent so take from end of list )
+         all_loged_window_names += [name.strip()] #in accending order (we need to get the most recent so take from end of list )
          
    tot_win_cnt = len(all_loged_window_names)
    can_get_cnt = min(_limit, tot_win_cnt)
