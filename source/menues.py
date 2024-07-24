@@ -169,12 +169,12 @@ def main_keyrec(state : bool = True) -> bool :
          utils.flush_in_buffer()
          window_name = str(input("\n\n Enter Your Window name: \n >> ")).strip()
          # keyboard.add_abbreviation("@", window_name) #when you type space will auto type last entered window name
-         utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12',window_name= window_name)
+         utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12', window_name= window_name)
       elif user_choice2 == 2 : #use the default target window
          utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
       elif user_choice2 == 3 : #show recent 5 used windows and try play on one of them 
          window_name = get_one_of_recent_windows()
-         utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12')
+         utils.replay_in_window(events, key_mapping=key_mapping, replay_key='f12', window_name= window_name)
       elif user_choice2 == 0 : #exit app loop
          state = False
          break
