@@ -1,0 +1,5 @@
+about-time==4.2.1
+alive-progress==3.3.0
+graphemeu==0.7.2
+keyboard==0.13.5
+pywin32==311
