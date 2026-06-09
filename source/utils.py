@@ -8,22 +8,19 @@
                           EXE using : pyinstaller module
 """
 # from curses import window
-from imp import load_source
+# from imp import load_source
 import os 
 import win32api
 import win32gui
 import keyboard
 import win32con
 import win32process
+
 import json
 import msvcrt
-import alive_progress #TODO
+# import alive_progress #TODO
 import scan_vk_codes_dicts as codes
-import keyboard
 import time
-import os
-import msvcrt
-import json
 import utils
 import random
 
@@ -32,11 +29,18 @@ defaults_dict = {
    "root_app_path"       : r"C:\Users\%USERNAME%\AppData\Roaming\KeyRec_Asda",
    "window_log_file"     : "recent_windows.json",
    "json_main_key"       : "window_log",
-   "window_name"         : "AsdaStory (AREAGAME)",
+   "window_name"         : "Asda2 (Live_OnNetUSA)",
    "toggle_play_key"     : "f12",
    "toggle_record_key"   : "f10"
 }
+# 5 ms yield — gives ~200 checks/sec while using negligible CPU
+POLL_INTERVAL_S: float = 0.005
 
+
+def _await_release(key: str) -> None:
+    """Block until a key is physically released. Replaces `while is_pressed(): pass`."""
+    while keyboard.is_pressed(key):
+        time.sleep(POLL_INTERVAL_S)
 
 def get_keys_map_dict() -> dict:
    # Create a dictionary that maps key names to virtual key codes and scan codes
@@ -106,9 +110,11 @@ def new_record(start_key='f10'):
          # exprimental: suppress=True the recorded events are not sent to the operating system, effectively blocking them from being observed by other applications
          events = keyboard.record(until=start_key, suppress=True) 
 
-         keyboard.unhook_all()
+         # keyboard.unhook_all()
          print(f"DONE RECORDING! Saving To 'keyrec{str(utils.count_files()+1)}.json'...")
          break
+      
+      time.sleep(POLL_INTERVAL_S)
    
    events_done = events[1:-1] #skip the record control key 'start_key' events
  
@@ -120,12 +126,13 @@ def new_record(start_key='f10'):
    del events
    return events_done
 
-def  waitLoop(waitTime: float, instant_stop_key):
-   startT = time.monotonic()
-   while time.monotonic() - startT < waitTime :
-      if keyboard.is_pressed(instant_stop_key):
-         return True
-   return False
+def waitLoop(waitTime: float, instant_stop_key: str) -> bool:
+    deadline = time.monotonic() + waitTime
+    while time.monotonic() < deadline:
+        if keyboard.is_pressed(instant_stop_key):
+            return True
+        time.sleep(POLL_INTERVAL_S)
+    return False
 
 # Replay the key presses to a specific application identified by its PID
 def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, replay_key: str = defaults_dict["toggle_play_key"], stop_key: str = defaults_dict["toggle_record_key"], window_name: str = defaults_dict["window_name"]):
@@ -170,7 +177,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
 
    while True: #NOTE: most inner loop controls terminating this loop
       if keyboard.is_pressed(replay_key):
-         while keyboard.is_pressed(replay_key) : pass
+         _await_release(replay_key)
          print(f"\nSTARTED PLAYING!...({replay_key} again to stop)")
          # time.sleep(0.1)
 
@@ -180,16 +187,18 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
             # win32gui.SetForegroundWindow(hwnd)
             # events = events[:-1]
             
-            #notify user that window is hidden only once when it starts being
-            if not win32gui.IsWindowVisible(hwnd) and not notedHiddenOnce:
-               print (f"Note: window '{window_name}' is minimized or hidden")
-               notedHiddenOnce = True
-            elif win32gui.IsWindowVisible(hwnd) and notedHiddenOnce:
-               print (f"Visible again!")
-               notedHiddenOnce = False
-               
-               
-            for event in events:
+            #(DISABLED) 
+            # notify user that window is hidden only once when it starts being
+            # is_visible = win32gui.IsWindowVisible(hwnd)
+            # if not is_visible and not notedHiddenOnce:
+            #    print(f"Note: window '{window_name}' is minimized or hidden")
+            #    notedHiddenOnce = True
+            # elif is_visible and notedHiddenOnce:
+            #    print("Visible again!")
+            #    notedHiddenOnce = False
+            #(DISABLED)
+                  
+            for i, event in enumerate(events):
                # convert gotten physical key code( scan code ) to vk code and pass booth
                scan_code = event.scan_code
                vk_code   = win32api.MapVirtualKey( scan_code , 1) #map or convert  scan code to vk code
@@ -221,11 +230,14 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
                      print (f"This Window({window_name})  doesn't Exist anymore! \n RESTARTING KeYRec tool... ")
                      return False
                   
-               rand_sleep_time = round(random.uniform(0.025, 0.250), 3)
-               isPressedInWaitLoop = waitLoop(rand_sleep_time, instant_stop_key= replay_key)
+               # rand_sleep_time = round(random.uniform(0.025, 0.250), 3)(use actual user press hold timing + its even more natural and random!)
+               # isPressedInWaitLoop = waitLoop(rand_sleep_time, instant_stop_key= replay_key)
+               if i < len(events) - 1:
+                  real_gap = events[i + 1].time - event.time   # actual recorded gap
+                  isPressedInWaitLoop = waitLoop(real_gap, instant_stop_key=replay_key)
    
                if keyboard.is_pressed(replay_key) or isPressedInWaitLoop: #listen while playing if pause key pressed
-                  while keyboard.is_pressed(replay_key) : pass
+                  _await_release(replay_key)
                   utils.flush_in_buffer()
                   # keyboard.release(replay_key)
                   # time.sleep(0.1)
@@ -249,7 +261,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
       
                   while True :#stop and wait for a key to unpuase
                      if keyboard.is_pressed(replay_key):
-                        while keyboard.is_pressed(replay_key) : pass
+                        _await_release(replay_key)
                         utils.flush_in_buffer()
                         # keyboard.release(replay_key)
                         # time.sleep(0.1)
@@ -265,7 +277,7 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
                         break
 
                      elif keyboard.is_pressed(stop_key): #STOP AND RETURN TO MAIN
-                        while keyboard.is_pressed(stop_key) : pass
+                        _await_release(stop_key)
                         utils.flush_in_buffer()
                         # keyboard.release(stop_key)
                         # time.sleep(0.1)
@@ -280,6 +292,10 @@ def replay_in_window(events: list[keyboard.KeyboardEvent],  key_mapping: dict, r
                         
                         utils.flush_in_buffer()
                         return True  #success use it later
+                     
+                     time.sleep(POLL_INTERVAL_S)
+                     
+      time.sleep(POLL_INTERVAL_S)   
 
 
 def count_files(directory= defaults_dict["root_app_path"] + r"\history"):
@@ -429,35 +445,31 @@ def get_windows_names(_limit: int) -> list:
    all_loged_window_names = []
    file_abs_path: os.PathLike | str = process_file_path(_file_dir= defaults_dict["root_app_path"], is_window_names_log= True)
    
+   window_log_json: str = ""
    if os.path.isfile( file_abs_path ) :
       with open(file_abs_path, 'r', encoding="utf-8") as jsonFile:
          window_log_json: str = jsonFile.read()
    
-   if(window_log_json == None or window_log_json == "") :
+   if(window_log_json is None or window_log_json == "") :
       return None
               
    _window_log_dict: dict = json.loads(window_log_json)
    json_ls_pairs = list(_window_log_dict[defaults_dict["json_main_key"]])
    
    for pair in json_ls_pairs :
-      for name, time in pair.items():
+      for name, _time in pair.items():
          all_loged_window_names += [name.strip()] #in accending order (we need to get the most recent so take from end of list )
          
    tot_win_cnt = len(all_loged_window_names)
    can_get_cnt = min(_limit, tot_win_cnt)
    
    n_recent_window_names = []
-   lst_idx = tot_win_cnt - 1 # 9
-   stop_at_idx = lst_idx - can_get_cnt # 8
-   for i in range (lst_idx, stop_at_idx, -1): #take in reverse to put the latest on top of list + skip duplicates + stop at maximum no of windows we can show
-      if all_loged_window_names[i] not in n_recent_window_names: 
-         n_recent_window_names += [all_loged_window_names[i]]
-      else:
-         continue  
-         
-   
-   
-   n_recent_window_names = n_recent_window_names[0:can_get_cnt]
+   for name in reversed(all_loged_window_names):
+      if name not in n_recent_window_names:
+         n_recent_window_names.append(name)
+      if len(n_recent_window_names) == can_get_cnt:
+         break
+      
    
    return n_recent_window_names
    

@@ -121,7 +121,7 @@ def main_keyrec(state : bool = True) -> bool :
    print(
    """
          Coder : Omar
-         Version : v2.1.2B
+         Version : v2.1.3B
          Code Type : key recorder tool for specific app window
          Title : KeyRec-Asda
          Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
