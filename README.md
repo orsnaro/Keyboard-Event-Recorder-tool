@@ -1,4 +1,4 @@
- # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/v2.1.2B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/v2.1.2B)  [![lastest pre release was](https://img.shields.io/github/release-date-pre/orsnaro/Keyboard-Event-Recorder-tool?label=latest%20release&color=9332af)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)
+ # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/V2.2.0B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/V2.2.0B)  [![lastest pre release was](https://img.shields.io/github/release-date-pre/orsnaro/Keyboard-Event-Recorder-tool?label=latest%20release&color=9332af)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)
 
 > [!NOTE]  
 > [V2.2.0B](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/V2.2.0B) _is out🚀_ download now!
