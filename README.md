@@ -1,7 +1,7 @@
  # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/v2.1.2B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/v2.1.2B)  [![lastest pre release was](https://img.shields.io/github/release-date-pre/orsnaro/Keyboard-Event-Recorder-tool?label=latest%20release&color=9332af)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)
 
 > [!NOTE]  
-> [V2.1.2B](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/v2.1.2B) _is out🚀_ Now you can save you favorite records! and swiftly re-use recently used apps!
+> [V2.2.0B](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/V2.2.0B) _is out🚀_ download now!
  
 Automation tool that records any given keyboard events 
   and plays them to any specific window / game  .  _Try the tool now!_ ***[Latest Release](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)***
@@ -18,7 +18,7 @@ Automation tool that records any given keyboard events
   > #### **📣About Version:**
   
    * tested using ***OS:*** win10 | ***Keyboard:*** Redragon Daksa : K576R-1 blue sw. )
-   * Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]	 |	EXE using : pyinstaller module
+   * Interpreter : cPython  v3.11.8 [Compiler : MSC v.1933 AMD64]	 |	EXE using : pyinstaller module
 	
 
 ![tool icon image](./KeyRec.ico)
