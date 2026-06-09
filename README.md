@@ -1,7 +1,7 @@
  # <center> Keyboard-Event-Recorder-tool  [![version badge](https://img.shields.io/badge/V2.2.0B-green?logo=github)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/V2.2.0B)  [![lastest pre release was](https://img.shields.io/github/release-date-pre/orsnaro/Keyboard-Event-Recorder-tool?label=latest%20release&color=9332af)](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)
 
 > [!NOTE]  
-> [V2.2.0B](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/V2.2.0B) _is out🚀_ download now!
+> [V2.2.0B](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/tag/V2.2.0B) _is out🚀_ now takes 100X less cpu power when running download now!
  
 Automation tool that records any given keyboard events 
   and plays them to any specific window / game  .  _Try the tool now!_ ***[Latest Release](https://github.com/orsnaro/Keyboard-Event-Recorder-tool/releases/latest)***
@@ -16,7 +16,8 @@ Automation tool that records any given keyboard events
   ----
   
   > #### **📣About Version:**
-  
+
+   * Optimized to use only ~0.1% of cpu instead of previous versions that was averaging 8~10% (100X better!) cpu while playing a keys record and enhanced its performance at the same time! win-win
    * tested using ***OS:*** win10 | ***Keyboard:*** Redragon Daksa : K576R-1 blue sw. )
    * Interpreter : cPython  v3.11.8 [Compiler : MSC v.1933 AMD64]	 |	EXE using : pyinstaller module
 	
