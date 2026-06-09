@@ -1,7 +1,7 @@
 """
                           Coder : Omar rs
-                          Version : v2.1.2B
-                          version Date :  19 / 6 / 2024
+                          Version : v2.2.0B
+                          version Date :  9 / 6 / 2026
                           Code Type : key recorder app for specific app window
                           Title : KeyRec-Asda
                           Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]
@@ -121,7 +121,7 @@ def main_keyrec(state : bool = True) -> bool :
    print(
    """
          Coder : Omar
-         Version : v2.1.3B
+         Version : v2.2.0B
          Code Type : key recorder tool for specific app window
          Title : KeyRec-Asda
          Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]

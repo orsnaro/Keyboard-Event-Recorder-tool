@@ -1,7 +1,7 @@
 """
 								  Coder : Omar
-								  Version : v2.0B
-								  version Date :  25 / 2 / 2024
+								  Version : v2.2.0B
+								  version Date :  9 / 6 / 2026
 								  Code Type : Dicts buffer for KeyRec App
 								  Title : KeyRec-Asda
 								  Interpreter : cPython  v3.11.0 [Compiler : MSC v.1933 AMD64]

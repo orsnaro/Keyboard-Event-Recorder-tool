@@ -1,7 +1,7 @@
 
 """
                           Coder : Omar rs
-                          Version : v2.1.3B
+                          Version : v2.2.0B
                           version Date :  9 / 6 / 2026
                           Code Type : key recorder app for specific app window
                           Title : KeyRec-Asda
